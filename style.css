@@ -23,8 +23,17 @@ body{
 
 .image{
     position: static;
+    margin:15px;
 }
 .image--clicked{
     position:fixed;
-    
+    margin:15px;
+}
+.gallery-grid{
+    display:grid;
+    grid-column: auto;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    padding: 0;
+    align-items: center;
 }

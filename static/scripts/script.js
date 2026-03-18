@@ -4,35 +4,54 @@ document.addEventListener('DOMContentLoaded', function(){
 
 function addClicks(){
 
-    
-    images = document.querySelectorAll('.image')
+    const gallery = document.querySelector('.gallery-grid')
+    const images = document.querySelectorAll('.image')
     images.forEach(function(image) {
-        image.addEventListener('click', function(e){
+        image.addEventListener('click', function(event){
         
-            document.addEventListener('click', function( event ) {
-            if (image !== event.target && !image.contains(event.target)) {    
-                console.log('clicking outside the div');
-                image.classList.remove("image--clicked")
-                image.width = 400
-            }
-            });
+            //code to remove the image if click outside
+            const openPicture = document.querySelector(".image--clicked");
 
-            if (image.classList.contains("image--clicked")) {
-                console.log("unclick")
-                image.classList.remove("image--clicked")
-                image.width = 400
+            
+            document.addEventListener('click', function(event){
+                console.log(event)
+                if (image !== event.target && !image.contains(event.target)) {    
+                    console.log('clicking outside the div ');
+                    console.log(`${event.target.classList}`)
+                    
+                    image.classList.remove("opened")
+                    openPicture.remove();
+                    return;
+
+                }
+            });
+            
+
+                //code to remove the image if clicked inside. possibly redundant
+            if(image.classList.contains("opened")){
+                console.log("not opened")
             }
             else{
-                image.width = 600
-                image.classList.add("image--clicked")
-                console.log(`clicked on ${image.getBoundingClientRect().width} ${image.getBoundingClientRect().height}`)
+                //CODE TO MAKE THE IMAGE LARGER WHEN CLICKED ON IT
                 screenWidth = window.innerWidth;
                 screenHeight = window.innerHeight;
                 imgWidth = image.getBoundingClientRect().width
                 imgHeight = image.getBoundingClientRect().height
-                image.style.left = (imgWidth - imgWidth/2) + "px"
+                
+                const tempPicture = document.createElement('img');
+                tempPicture.classList.add("image--clicked")
+                image.classList.add("opened")
+
+                tempPicture.src = image.src;
+                tempPicture.width = 400;
+                tempPicture.style.left = (screenWidth/2 - imgWidth/2) + "px"
+                tempPicture.style.top = (screenHeight/2 - imgHeight/2) + "px"
+                gallery.appendChild(tempPicture);
             }
-        })
+                    
+                    
+                
+        });
     });
 
 }
